@@ -17,9 +17,7 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: async () => {
-          return await axios.get("https://api.imgflip.com/get_memes");
-        },
+        loader: () => axios.get("https://api.imgflip.com/get_memes"),
         element: <MainPage />,
       },
     ],
@@ -30,13 +28,13 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <AppBar>
+      <AppBar position="relative">
         <Toolbar>
           <Typography variant="h4">Meme generator!</Typography>
         </Toolbar>
       </AppBar>
       <main>
-        <Container maxWidth="md" style={{ marginTop: "100px" }}>
+        <Container maxWidth="md" style={{ marginTop: "40px" }}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Typography variant="h5" gutterBottom textAlign="center">
