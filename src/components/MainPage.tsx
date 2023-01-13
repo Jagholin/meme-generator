@@ -112,7 +112,8 @@ export default function MainPage() {
         </div>
         <CardContent>
           <Typography variant="body1" textAlign="center">
-            {loaderData.data.data.memes[currentMemeIndex].name}
+            {loaderData.data.data.memes[currentMemeIndex].name} (
+            {currentMemeIndex + 1} out of {loaderData.data.data.memes.length})
           </Typography>
         </CardContent>
         <CardActions>
@@ -136,7 +137,11 @@ export default function MainPage() {
               </Button>
               <Button
                 variant="outlined"
-                onClick={() => setCurrentMemeIndex((a) => a + 1)}
+                onClick={() =>
+                  setCurrentMemeIndex((a) =>
+                    a === loaderData.data.data.memes.length - 1 ? a : a + 1
+                  )
+                }
                 className={classes.button}
               >
                 Next
