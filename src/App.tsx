@@ -1,34 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import { AppBar, Toolbar } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { Container } from "@mui/system";
+import Grid from "@mui/material/Grid";
+import CssBaseline from "@mui/material/CssBaseline";
+import Paper from "@mui/material/Paper";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import axios from "axios";
+import MainPage from "./components/MainPage";
+
+const routes = createBrowserRouter([
+  {
+    path: "/",
+    element: <Outlet />,
+    children: [
+      {
+        index: true,
+        loader: async () => {
+          return await axios.get("https://api.imgflip.com/get_memes");
+        },
+        element: <MainPage />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <>
+      <CssBaseline />
+      <AppBar>
+        <Toolbar>
+          <Typography variant="h4">Meme generator!</Typography>
+        </Toolbar>
+      </AppBar>
+      <main>
+        <Container maxWidth="md" style={{ marginTop: "100px" }}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Typography variant="h5" gutterBottom textAlign="center">
+                This is a meme generator app!
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <RouterProvider router={routes} />
+            </Grid>
+          </Grid>
+        </Container>
+      </main>
+    </>
+  );
 }
 
-export default App
+export default App;
