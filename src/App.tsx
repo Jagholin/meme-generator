@@ -1,6 +1,6 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import { AppBar, Toolbar } from "@mui/material";
+import { AppBar, createTheme, Toolbar } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/system";
 import Grid from "@mui/material/Grid";
@@ -28,13 +28,14 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <AppBar position="relative">
+      <AppBar>
         <Toolbar>
           <Typography variant="h4">Meme generator!</Typography>
         </Toolbar>
       </AppBar>
+      <Toolbar></Toolbar>
       <main>
-        <Container maxWidth="md" style={{ marginTop: "40px" }}>
+        <Container maxWidth="md">
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Typography variant="h5" gutterBottom textAlign="center">

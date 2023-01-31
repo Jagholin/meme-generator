@@ -14,6 +14,8 @@ import React, { useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import useStyles from "../theme";
 import domtoimage from "dom-to-image";
+import EditableContainer from "./EditableContainer";
+import MemeText from "./MemeText";
 
 interface MemeItem {
   height: number;
@@ -37,8 +39,12 @@ interface MemeLoaderData {
 
 export default function MainPage() {
   const [currentMemeIndex, setCurrentMemeIndex] = useState(0);
-  const [memeTextTop, setMemeTextTop] = useState("");
-  const [memeTextBottom, setMemeTextBottom] = useState("");
+  // const [memeTextTop, setMemeTextTop] = useState("");
+  // const [memeTextBottom, setMemeTextBottom] = useState("");
+  const [memeText, setMemeText] = useState<string[]>([
+    "text top",
+    "text bottom",
+  ]);
   const loaderData = useLoaderData() as MemeLoaderData;
   const { classes } = useStyles();
   const imageElement = useRef<HTMLDivElement>(null);
@@ -82,32 +88,16 @@ export default function MainPage() {
             image={loaderData.data.data.memes[currentMemeIndex].url}
             title={loaderData.data.data.memes[currentMemeIndex].name}
           >
-            <p
-              style={{
-                position: "absolute",
-                fontSize: "3rem",
-                color: primaryColor,
-                textAlign: "center",
-                inset: "0",
-                textShadow: `0 2px 2px ${shadowColor}, 0 -2px 2px ${shadowColor}, 2px 0 2px ${shadowColor}, -2px 0 2px ${shadowColor}`,
-              }}
-            >
-              {memeTextTop}
-            </p>
-            <p
-              style={{
-                position: "absolute",
-                fontSize: "3rem",
-                color: primaryColor,
-                textAlign: "center",
-                textShadow: `0 2px 2px ${shadowColor}, 0 -2px 2px ${shadowColor}, 2px 0 2px ${shadowColor}, -2px 0 2px ${shadowColor}`,
-                left: 0,
-                right: 0,
-                bottom: 0,
-              }}
-            >
-              {memeTextBottom}
-            </p>
+            <EditableContainer>
+              {memeText.map((text, idx) => (
+                <MemeText
+                  primaryColor={primaryColor}
+                  shadowColor={shadowColor}
+                  memeText={text}
+                  key={idx}
+                />
+              ))}
+            </EditableContainer>
           </CardMedia>
         </div>
         <CardContent>
@@ -132,6 +122,7 @@ export default function MainPage() {
                   setCurrentMemeIndex((a) => (a === 0 ? a : a - 1))
                 }
                 className={classes.button}
+                color="primary"
               >
                 Previous Image
               </Button>
@@ -162,19 +153,19 @@ export default function MainPage() {
               ></Switch>
               <Typography>white text</Typography>
             </Stack>
-
-            <TextField
-              fullWidth
-              label={"Meme text top"}
-              value={memeTextTop}
-              onChange={(e) => setMemeTextTop(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              label={"Meme text bottom"}
-              value={memeTextBottom}
-              onChange={(e) => setMemeTextBottom(e.target.value)}
-            />
+            {memeText.map((text, idx) => (
+              <TextField
+                fullWidth
+                label={`Meme text ${idx}`}
+                value={text}
+                onChange={(e) =>
+                  setMemeText((t) =>
+                    t.map((v, id) => (id === idx ? e.target.value : v))
+                  )
+                }
+                key={idx}
+              />
+            ))}
             <Button
               variant="contained"
               className={classes.button}
