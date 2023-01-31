@@ -6,6 +6,7 @@ import {
   CardMedia,
   Grid,
   Stack,
+  styled,
   Switch,
   TextField,
   Typography,
@@ -34,6 +35,30 @@ interface MemeLoaderData {
     data: MemeData;
   };
 }
+
+const TextTop = styled("p")(({theme}) => ({
+  position: "absolute",
+  fontSize: "3rem",
+  color: theme.palette.primary.main,
+  textAlign: "center",
+  inset: "0",
+}));
+
+const TextBottom = styled("p")({
+  position: "absolute",
+  fontSize: "3rem",
+  textAlign: "center",
+  left: 0,
+  right: 0,
+  bottom: 0,
+});
+
+const DivFlexed = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+  width: "100%",
+});
 
 export default function MainPage() {
   const [currentMemeIndex, setCurrentMemeIndex] = useState(0);
@@ -82,32 +107,22 @@ export default function MainPage() {
             image={loaderData.data.data.memes[currentMemeIndex].url}
             title={loaderData.data.data.memes[currentMemeIndex].name}
           >
-            <p
-              style={{
-                position: "absolute",
-                fontSize: "3rem",
+            <TextTop
+              sx={{
                 color: primaryColor,
-                textAlign: "center",
-                inset: "0",
                 textShadow: `0 2px 2px ${shadowColor}, 0 -2px 2px ${shadowColor}, 2px 0 2px ${shadowColor}, -2px 0 2px ${shadowColor}`,
               }}
             >
               {memeTextTop}
-            </p>
-            <p
-              style={{
-                position: "absolute",
-                fontSize: "3rem",
+            </TextTop>
+            <TextBottom
+              sx={{
                 color: primaryColor,
-                textAlign: "center",
                 textShadow: `0 2px 2px ${shadowColor}, 0 -2px 2px ${shadowColor}, 2px 0 2px ${shadowColor}, -2px 0 2px ${shadowColor}`,
-                left: 0,
-                right: 0,
-                bottom: 0,
               }}
             >
               {memeTextBottom}
-            </p>
+            </TextBottom>
           </CardMedia>
         </div>
         <CardContent>
@@ -117,14 +132,7 @@ export default function MainPage() {
           </Typography>
         </CardContent>
         <CardActions>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-              width: "100%",
-            }}
-          >
+          <DivFlexed>
             <div style={{ marginInline: "auto" }}>
               <Button
                 variant="outlined"
@@ -182,7 +190,7 @@ export default function MainPage() {
             >
               Save image...
             </Button>
-          </div>
+          </DivFlexed>
         </CardActions>
       </Card>
     </>

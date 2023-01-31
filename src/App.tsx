@@ -34,7 +34,7 @@ function App() {
         </Toolbar>
       </AppBar>
       <main>
-        <Container maxWidth="md" style={{ marginTop: "40px" }}>
+        <Container maxWidth="md" sx={{ marginTop: "40px" }}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Typography variant="h5" gutterBottom textAlign="center">
